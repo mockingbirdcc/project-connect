@@ -1,13 +1,31 @@
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
 import { buildInitialState } from "../data/seed";
 
-const STORAGE_KEY = "connect-prototype-state-v1";
+// Bump this whenever the persisted shape changes (new fields on posts/etc.) so
+// stale localStorage from an older version of the app doesn't get loaded as-is.
+const STORAGE_KEY = "connect-prototype-state-v2";
 const AppContext = createContext(null);
+
+function normalizePost(post) {
+  return {
+    allowReact: false,
+    allowComment: false,
+    allowMessage: false,
+    reactions: [],
+    comments: [],
+    dismissedBy: [],
+    customAudienceIds: [],
+    ...post,
+  };
+}
 
 function loadInitialState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return { ...parsed, posts: (parsed.posts || []).map(normalizePost), messages: parsed.messages || [] };
+    }
   } catch (err) {
     console.warn("Failed to load saved prototype state, reseeding.", err);
   }
