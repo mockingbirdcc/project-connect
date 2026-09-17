@@ -54,8 +54,8 @@ export default function Profile() {
         {!isSelf && (
           <div className="profile-action">
             {status === "none" && (
-              <button className="btn-primary" onClick={() => setConnectOpen(true)}>
-                Connect
+              <button className="btn-secondary" onClick={() => setConnectOpen(true)}>
+                Ask to Connect
               </button>
             )}
             {status === "pending_sent" && (

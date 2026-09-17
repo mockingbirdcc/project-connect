@@ -59,7 +59,7 @@ export default function PostCard({ post, showDismiss = true }) {
         </Link>
         {intent && (
           <span className="intent-chip" title={intent.hint}>
-            {intent.emoji} {intent.label}
+            <span className="intent-chip-dot">{intent.emoji}</span> {intent.label}
           </span>
         )}
       </div>
@@ -77,9 +77,9 @@ export default function PostCard({ post, showDismiss = true }) {
           {post.allowReact && (
             <button
               className={`reply-btn ${iReacted ? "active" : ""}`}
-              onClick={() => toggleReaction({ postId: post.id, userId: currentUser.id, emoji: "🤍" })}
+              onClick={() => toggleReaction({ postId: post.id, userId: currentUser.id, emoji: "👍" })}
             >
-              {iReacted ? "❤️" : "🤍"} React{post.reactions.length > 0 ? ` · ${post.reactions.length}` : ""}
+              👍 React{post.reactions.length > 0 ? ` · ${post.reactions.length}` : ""}
             </button>
           )}
           {post.allowComment && (
@@ -89,7 +89,7 @@ export default function PostCard({ post, showDismiss = true }) {
           )}
           {post.allowMessage && (
             <button className="reply-btn" onClick={() => setMessageOpen(true)}>
-              ✉️ Message
+              📤 Message
             </button>
           )}
         </div>

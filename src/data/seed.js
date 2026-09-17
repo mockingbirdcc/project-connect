@@ -24,9 +24,9 @@ export const POST_INTENTS = [
 ];
 
 export const REPLY_OPTIONS = [
-  { id: "allowReact", label: "React", emoji: "🤍", hint: "A quiet acknowledgment — no words needed" },
+  { id: "allowReact", label: "React", emoji: "👍", hint: "A quiet acknowledgment — no words needed" },
   { id: "allowComment", label: "Comment", emoji: "💬", hint: "Visible to anyone who can see this conversation" },
-  { id: "allowMessage", label: "Message", emoji: "✉️", hint: "A private reply, just to you" },
+  { id: "allowMessage", label: "Message", emoji: "📤", hint: "A private reply, just to you" },
 ];
 
 export const AUDIENCE_OPTIONS = [
@@ -157,7 +157,7 @@ export const seedPosts = [
     allowReact: true,
     allowComment: true,
     allowMessage: false,
-    reactions: [{ userId: "u2", emoji: "🤍" }],
+    reactions: [{ userId: "u2", emoji: "👍" }],
     comments: [
       { id: "cm1", authorId: "u3", content: "SO proud of you for this.", createdAt: "2026-09-15T17:10:00Z" },
     ],
@@ -221,7 +221,7 @@ export const seedPosts = [
     allowReact: true,
     allowComment: true,
     allowMessage: false,
-    reactions: [{ userId: "u2", emoji: "🤍" }, { userId: "u4", emoji: "🤍" }],
+    reactions: [{ userId: "u2", emoji: "👍" }, { userId: "u4", emoji: "👍" }],
     comments: [],
     dismissedBy: [],
   },

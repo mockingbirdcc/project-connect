@@ -3,7 +3,6 @@ import { useApp, useCurrentUser } from "../store/AppContext";
 import { canView } from "../lib/consent";
 import PostCard from "../components/PostCard";
 import PostComposer from "../components/PostComposer";
-import Avatar from "../components/Avatar";
 
 export default function Feed() {
   const { posts, connections, dismissPosts, undismissPost } = useApp();
@@ -30,13 +29,6 @@ export default function Feed() {
 
   return (
     <div className="page feed-page">
-      <div className="composer-trigger">
-        <Avatar user={currentUser} size={40} />
-        <button className="composer-fake-input" onClick={() => setComposerOpen(true)}>
-          Start a conversation with the people who should be part of it...
-        </button>
-      </div>
-
       {visiblePosts.length > 0 && (
         <div className="feed-toolbar">
           <button
@@ -90,6 +82,12 @@ export default function Feed() {
           )}
         </div>
       )}
+
+      <div className="composer-trigger">
+        <button className="composer-fake-input" onClick={() => setComposerOpen(true)}>
+          Start New Conversation
+        </button>
+      </div>
 
       {composerOpen && <PostComposer onClose={() => setComposerOpen(false)} />}
     </div>
