@@ -24,6 +24,13 @@ export default function PostComposer({ onClose, onPosted }) {
     setReplyOptions((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
+  const allReplyOptionsOn = REPLY_OPTIONS.every((option) => replyOptions[option.id]);
+
+  function toggleAllReplyOptions() {
+    const next = !allReplyOptionsOn;
+    setReplyOptions({ allowReact: next, allowComment: next, allowMessage: next });
+  }
+
   function canAdvance() {
     if (step === 1) return content.trim().length > 0;
     if (step === 2) return !!intent;
@@ -153,6 +160,13 @@ export default function PostComposer({ onClose, onPosted }) {
               Nothing is available unless you allow it — pick what fits this conversation.
             </p>
             <div className="choice-list">
+              <label className={`choice-item tier-choice ${allReplyOptionsOn ? "selected" : ""}`}>
+                <input type="checkbox" checked={allReplyOptionsOn} onChange={toggleAllReplyOptions} />
+                <span>
+                  <strong>🔓 All responses</strong>
+                  <small>Turn on React, Comment, and Message together</small>
+                </span>
+              </label>
               {REPLY_OPTIONS.map((option) => (
                 <label
                   key={option.id}

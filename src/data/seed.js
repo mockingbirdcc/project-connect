@@ -15,10 +15,7 @@ export const INTENTIONS = [
 ];
 
 export const POST_INTENTS = [
-  { id: "celebrate", label: "Celebrating", emoji: "🎉", hint: "Sharing good news" },
   { id: "support", label: "Asking for support", emoji: "🫂", hint: "Could use some care right now" },
-  { id: "vent", label: "Venting", emoji: "😤", hint: "Just need to get it out, not looking for advice" },
-  { id: "update", label: "Sharing an update", emoji: "📝", hint: "Life stuff, FYI" },
   { id: "advice", label: "Asking for advice", emoji: "🤔", hint: "Genuinely want input" },
   { id: "just_because", label: "Just because", emoji: "✨", hint: "No particular reason" },
 ];
@@ -150,7 +147,7 @@ export const seedPosts = [
     id: "p1",
     authorId: "u1",
     content: "Finally shipped the thing I've been heads-down on for six weeks. Feeling lighter than I have in a while.",
-    intent: "celebrate",
+    intent: "just_because",
     audience: "connected",
     customAudienceIds: [],
     createdAt: "2026-09-15T16:00:00Z",
@@ -167,7 +164,7 @@ export const seedPosts = [
     id: "p2",
     authorId: "u2",
     content: "First glaze test out of the new kiln didn't crack. Small wins, but they count.",
-    intent: "celebrate",
+    intent: "just_because",
     audience: "trusted",
     customAudienceIds: [],
     createdAt: "2026-09-14T12:30:00Z",
@@ -182,7 +179,7 @@ export const seedPosts = [
     id: "p3",
     authorId: "u3",
     content: "Rough week. Not really looking for advice, just needed somewhere honest to put it.",
-    intent: "vent",
+    intent: "support",
     audience: "inner",
     customAudienceIds: [],
     createdAt: "2026-09-13T21:10:00Z",
