@@ -156,9 +156,9 @@ export default function PostComposer({ onClose, onPosted }) {
                           {previewUsers.length === 0 ? (
                             <span className="avatar-empty-note">No one yet</span>
                           ) : (
-                            previewUsers.slice(0, 6).map((u) => <Avatar key={u.id} user={u} size={20} />)
+                            previewUsers.slice(0, 10).map((u) => <Avatar key={u.id} user={u} size={20} />)
                           )}
-                          {previewUsers.length > 6 && <span className="avatar-overflow">+{previewUsers.length - 6}</span>}
+                          {previewUsers.length > 10 && <span className="avatar-overflow">+{previewUsers.length - 10}</span>}
                         </span>
                       )}
                     </span>

@@ -76,6 +76,34 @@ export const seedUsers = [
     color: "#4fb0c9",
     bio: "New in town, looking to actually meet people instead of just scrolling past them.",
   },
+  {
+    id: "u7",
+    name: "Devon Brooks",
+    initials: "DB",
+    color: "#c94f7e",
+    bio: "Board game enthusiast, mediocre chef, excellent DJ.",
+  },
+  {
+    id: "u8",
+    name: "Farah Al-Sayed",
+    initials: "FA",
+    color: "#4fc9a0",
+    bio: "UX researcher who still writes physical letters.",
+  },
+  {
+    id: "u9",
+    name: "Noor Kim",
+    initials: "NK",
+    color: "#c98f4f",
+    bio: "Community garden coordinator. Will talk your ear off about compost.",
+  },
+  {
+    id: "u10",
+    name: "Wes Tanaka",
+    initials: "WT",
+    color: "#6f9dc9",
+    bio: "Freelance illustrator, permanently behind on emails.",
+  },
 ];
 
 // currentUserId defaults to u1 (Rania) so the prototype opens on a populated account.
@@ -140,6 +168,27 @@ export const seedConnections = [
     createdAt: "2026-05-20T11:00:00Z",
     respondedAt: "2026-05-21T09:00:00Z",
   },
+  // A denser social graph so audience previews ("Who is this for?") show a real
+  // crowd of avatars instead of just one or two people.
+  { id: "c6", fromId: "u1", toId: "u6", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-01T10:00:00Z", respondedAt: "2026-08-01T12:00:00Z" },
+  { id: "c7", fromId: "u1", toId: "u7", status: "accepted", tier: "trusted", requestedTier: "trusted", intention: "Rekindle a friendship", note: "", createdAt: "2026-07-15T10:00:00Z", respondedAt: "2026-07-15T18:00:00Z" },
+  { id: "c8", fromId: "u1", toId: "u8", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Professional connection", note: "", createdAt: "2026-08-10T10:00:00Z", respondedAt: "2026-08-10T14:00:00Z" },
+  { id: "c9", fromId: "u1", toId: "u9", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-20T10:00:00Z", respondedAt: "2026-08-20T16:00:00Z" },
+  { id: "c10", fromId: "u1", toId: "u10", status: "accepted", tier: "inner", requestedTier: "inner", intention: "Rekindle a friendship", note: "", createdAt: "2026-03-01T10:00:00Z", respondedAt: "2026-03-01T20:00:00Z" },
+  { id: "c11", fromId: "u2", toId: "u6", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-02T10:00:00Z", respondedAt: "2026-08-02T12:00:00Z" },
+  { id: "c12", fromId: "u2", toId: "u8", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Professional connection", note: "", createdAt: "2026-08-11T10:00:00Z", respondedAt: "2026-08-11T14:00:00Z" },
+  { id: "c13", fromId: "u3", toId: "u7", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-07-16T10:00:00Z", respondedAt: "2026-07-16T18:00:00Z" },
+  { id: "c14", fromId: "u3", toId: "u9", status: "accepted", tier: "trusted", requestedTier: "trusted", intention: "Get to know you better", note: "", createdAt: "2026-08-21T10:00:00Z", respondedAt: "2026-08-21T16:00:00Z" },
+  { id: "c15", fromId: "u4", toId: "u6", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-03T10:00:00Z", respondedAt: "2026-08-03T12:00:00Z" },
+  { id: "c16", fromId: "u4", toId: "u8", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Professional connection", note: "", createdAt: "2026-08-12T10:00:00Z", respondedAt: "2026-08-12T14:00:00Z" },
+  { id: "c17", fromId: "u4", toId: "u9", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-22T10:00:00Z", respondedAt: "2026-08-22T16:00:00Z" },
+  { id: "c18", fromId: "u5", toId: "u7", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Get to know you better", note: "", createdAt: "2026-07-17T10:00:00Z", respondedAt: "2026-07-17T18:00:00Z" },
+  { id: "c19", fromId: "u6", toId: "u9", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-23T10:00:00Z", respondedAt: "2026-08-23T16:00:00Z" },
+  { id: "c20", fromId: "u6", toId: "u10", status: "accepted", tier: "trusted", requestedTier: "trusted", intention: "Rekindle a friendship", note: "", createdAt: "2026-08-04T10:00:00Z", respondedAt: "2026-08-04T12:00:00Z" },
+  { id: "c21", fromId: "u7", toId: "u8", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Professional connection", note: "", createdAt: "2026-08-13T10:00:00Z", respondedAt: "2026-08-13T14:00:00Z" },
+  { id: "c22", fromId: "u8", toId: "u10", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-14T10:00:00Z", respondedAt: "2026-08-14T14:00:00Z" },
+  { id: "c23", fromId: "u9", toId: "u10", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-08-24T10:00:00Z", respondedAt: "2026-08-24T16:00:00Z" },
+  { id: "c24", fromId: "u5", toId: "u9", status: "accepted", tier: "connected", requestedTier: "connected", intention: "Stay in touch", note: "", createdAt: "2026-07-18T10:00:00Z", respondedAt: "2026-07-18T18:00:00Z" },
 ];
 
 export const seedPosts = [
