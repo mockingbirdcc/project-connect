@@ -71,7 +71,7 @@ export function AppProvider({ children }) {
     }));
   }, []);
 
-  const createPost = useCallback(({ authorId, content, intent, audience, customAudienceIds }) => {
+  const createPost = useCallback(({ authorId, content, intent, audience, customAudienceIds, allowReact, allowComment, allowMessage }) => {
     setState((s) => ({
       ...s,
       posts: [
@@ -83,9 +83,89 @@ export function AppProvider({ children }) {
           audience,
           customAudienceIds: customAudienceIds || [],
           createdAt: new Date().toISOString(),
+          allowReact,
+          allowComment,
+          allowMessage,
+          reactions: [],
+          comments: [],
+          dismissedBy: [],
         },
         ...s.posts,
       ],
+    }));
+  }, []);
+
+  const toggleReaction = useCallback(({ postId, userId, emoji }) => {
+    setState((s) => ({
+      ...s,
+      posts: s.posts.map((p) => {
+        if (p.id !== postId) return p;
+        const already = p.reactions.some((r) => r.userId === userId);
+        return {
+          ...p,
+          reactions: already
+            ? p.reactions.filter((r) => r.userId !== userId)
+            : [...p.reactions, { userId, emoji }],
+        };
+      }),
+    }));
+  }, []);
+
+  const addComment = useCallback(({ postId, authorId, content }) => {
+    setState((s) => ({
+      ...s,
+      posts: s.posts.map((p) =>
+        p.id === postId
+          ? {
+              ...p,
+              comments: [
+                ...p.comments,
+                { id: `cm${Date.now()}`, authorId, content, createdAt: new Date().toISOString() },
+              ],
+            }
+          : p
+      ),
+    }));
+  }, []);
+
+  const sendMessage = useCallback(({ fromId, toId, content, postId }) => {
+    setState((s) => ({
+      ...s,
+      messages: [
+        ...s.messages,
+        { id: `m${Date.now()}`, fromId, toId, content, postId, createdAt: new Date().toISOString() },
+      ],
+    }));
+  }, []);
+
+  const dismissPost = useCallback(({ postId, userId }) => {
+    setState((s) => ({
+      ...s,
+      posts: s.posts.map((p) =>
+        p.id === postId && !p.dismissedBy.includes(userId)
+          ? { ...p, dismissedBy: [...p.dismissedBy, userId] }
+          : p
+      ),
+    }));
+  }, []);
+
+  const dismissPosts = useCallback(({ postIds, userId }) => {
+    setState((s) => ({
+      ...s,
+      posts: s.posts.map((p) =>
+        postIds.includes(p.id) && !p.dismissedBy.includes(userId)
+          ? { ...p, dismissedBy: [...p.dismissedBy, userId] }
+          : p
+      ),
+    }));
+  }, []);
+
+  const undismissPost = useCallback(({ postId, userId }) => {
+    setState((s) => ({
+      ...s,
+      posts: s.posts.map((p) =>
+        p.id === postId ? { ...p, dismissedBy: p.dismissedBy.filter((id) => id !== userId) } : p
+      ),
     }));
   }, []);
 
@@ -97,8 +177,27 @@ export function AppProvider({ children }) {
       sendConnectionInvite,
       respondToInvite,
       createPost,
+      toggleReaction,
+      addComment,
+      sendMessage,
+      dismissPost,
+      dismissPosts,
+      undismissPost,
     }),
-    [state, switchUser, resetData, sendConnectionInvite, respondToInvite, createPost]
+    [
+      state,
+      switchUser,
+      resetData,
+      sendConnectionInvite,
+      respondToInvite,
+      createPost,
+      toggleReaction,
+      addComment,
+      sendMessage,
+      dismissPost,
+      dismissPosts,
+      undismissPost,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

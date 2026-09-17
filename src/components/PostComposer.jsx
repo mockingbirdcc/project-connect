@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { POST_INTENTS, AUDIENCE_OPTIONS } from "../data/seed";
+import { POST_INTENTS, AUDIENCE_OPTIONS, REPLY_OPTIONS } from "../data/seed";
 import { useApp, useCurrentUser } from "../store/AppContext";
 import Avatar from "./Avatar";
 
@@ -11,12 +11,17 @@ export default function PostComposer({ onClose, onPosted }) {
   const [intent, setIntent] = useState(null);
   const [audience, setAudience] = useState(null);
   const [customIds, setCustomIds] = useState([]);
+  const [replyOptions, setReplyOptions] = useState({ allowReact: false, allowComment: false, allowMessage: false });
 
-  const totalSteps = 3;
+  const totalSteps = 4;
   const connectedUsers = users.filter((u) => u.id !== currentUser.id);
 
   function toggleCustom(id) {
     setCustomIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }
+
+  function toggleReplyOption(id) {
+    setReplyOptions((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
   function canAdvance() {
@@ -33,6 +38,9 @@ export default function PostComposer({ onClose, onPosted }) {
       intent,
       audience,
       customAudienceIds: audience === "custom" ? customIds : [],
+      allowReact: replyOptions.allowReact,
+      allowComment: replyOptions.allowComment,
+      allowMessage: replyOptions.allowMessage,
     });
     onPosted?.();
     onClose();
@@ -46,7 +54,7 @@ export default function PostComposer({ onClose, onPosted }) {
         </button>
 
         <div className="modal-header">
-          <h2>New Post</h2>
+          <h2>New Conversation</h2>
           <div className="step-dots">
             {Array.from({ length: totalSteps }).map((_, i) => (
               <span key={i} className={`step-dot ${i + 1 <= step ? "active" : ""}`} />
@@ -72,7 +80,7 @@ export default function PostComposer({ onClose, onPosted }) {
 
         {step === 2 && (
           <div className="modal-body">
-            <p className="modal-prompt">What's the intent behind this post?</p>
+            <p className="modal-prompt">What's the intent behind this conversation?</p>
             <p className="modal-subtext">This helps people know how to hold it before they respond.</p>
             <div className="intent-grid">
               {POST_INTENTS.map((option) => (
@@ -138,6 +146,38 @@ export default function PostComposer({ onClose, onPosted }) {
           </div>
         )}
 
+        {step === 4 && (
+          <div className="modal-body">
+            <p className="modal-prompt">What can people do in response?</p>
+            <p className="modal-subtext">
+              Nothing is available unless you allow it — pick what fits this conversation.
+            </p>
+            <div className="choice-list">
+              {REPLY_OPTIONS.map((option) => (
+                <label
+                  key={option.id}
+                  className={`choice-item tier-choice ${replyOptions[option.id] ? "selected" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={replyOptions[option.id]}
+                    onChange={() => toggleReplyOption(option.id)}
+                  />
+                  <span>
+                    <strong>{option.emoji} {option.label}</strong>
+                    <small>{option.hint}</small>
+                  </span>
+                </label>
+              ))}
+            </div>
+            {!replyOptions.allowReact && !replyOptions.allowComment && !replyOptions.allowMessage && (
+              <p className="modal-subtext" style={{ marginTop: 10 }}>
+                That's OK too — this can be a one-way share, nothing more.
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="modal-actions">
           {step > 1 && (
             <button className="btn-ghost" onClick={() => setStep(step - 1)}>
@@ -151,7 +191,7 @@ export default function PostComposer({ onClose, onPosted }) {
             </button>
           ) : (
             <button className="btn-primary" disabled={!canAdvance()} onClick={handlePublish}>
-              Publish
+              Start Conversation
             </button>
           )}
         </div>

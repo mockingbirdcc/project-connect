@@ -23,6 +23,12 @@ export const POST_INTENTS = [
   { id: "just_because", label: "Just because", emoji: "✨", hint: "No particular reason" },
 ];
 
+export const REPLY_OPTIONS = [
+  { id: "allowReact", label: "React", emoji: "🤍", hint: "A quiet acknowledgment — no words needed" },
+  { id: "allowComment", label: "Comment", emoji: "💬", hint: "Visible to anyone who can see this conversation" },
+  { id: "allowMessage", label: "Message", emoji: "✉️", hint: "A private reply, just to you" },
+];
+
 export const AUDIENCE_OPTIONS = [
   { id: "inner", label: "Inner circle only", description: "Only the people you trust most" },
   { id: "trusted", label: "Trusted connections", description: "Inner circle + trusted connections" },
@@ -148,6 +154,14 @@ export const seedPosts = [
     audience: "connected",
     customAudienceIds: [],
     createdAt: "2026-09-15T16:00:00Z",
+    allowReact: true,
+    allowComment: true,
+    allowMessage: false,
+    reactions: [{ userId: "u2", emoji: "🤍" }],
+    comments: [
+      { id: "cm1", authorId: "u3", content: "SO proud of you for this.", createdAt: "2026-09-15T17:10:00Z" },
+    ],
+    dismissedBy: [],
   },
   {
     id: "p2",
@@ -157,6 +171,12 @@ export const seedPosts = [
     audience: "trusted",
     customAudienceIds: [],
     createdAt: "2026-09-14T12:30:00Z",
+    allowReact: true,
+    allowComment: false,
+    allowMessage: false,
+    reactions: [],
+    comments: [],
+    dismissedBy: [],
   },
   {
     id: "p3",
@@ -166,6 +186,12 @@ export const seedPosts = [
     audience: "inner",
     customAudienceIds: [],
     createdAt: "2026-09-13T21:10:00Z",
+    allowReact: true,
+    allowComment: false,
+    allowMessage: true,
+    reactions: [],
+    comments: [],
+    dismissedBy: [],
   },
   {
     id: "p4",
@@ -175,15 +201,29 @@ export const seedPosts = [
     audience: "connected",
     customAudienceIds: [],
     createdAt: "2026-09-12T09:45:00Z",
+    allowReact: false,
+    allowComment: true,
+    allowMessage: true,
+    reactions: [],
+    comments: [
+      { id: "cm2", authorId: "u1", content: "I did it in June, zero regrets — happy to talk through it.", createdAt: "2026-09-12T10:02:00Z" },
+    ],
+    dismissedBy: [],
   },
   {
     id: "p5",
     authorId: "u1",
-    content: "Quiet Sunday. Made soup. That's the whole post.",
+    content: "Quiet Sunday. Made soup. That's the whole update.",
     intent: "just_because",
     audience: "trusted",
     customAudienceIds: [],
     createdAt: "2026-09-11T19:20:00Z",
+    allowReact: true,
+    allowComment: true,
+    allowMessage: false,
+    reactions: [{ userId: "u2", emoji: "🤍" }, { userId: "u4", emoji: "🤍" }],
+    comments: [],
+    dismissedBy: [],
   },
 ];
 
@@ -193,5 +233,6 @@ export function buildInitialState() {
     users: seedUsers,
     connections: seedConnections,
     posts: seedPosts,
+    messages: [],
   };
 }

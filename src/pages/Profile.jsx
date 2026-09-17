@@ -76,12 +76,12 @@ export default function Profile() {
         )}
       </div>
 
-      <h2 className="section-title">Post History</h2>
+      <h2 className="section-title">Conversation History</h2>
       {postHistory.length === 0 ? (
         <div className="empty-state">
           <p>
             {isSelf
-              ? "You haven't shared anything yet."
+              ? "You haven't started any conversations yet."
               : status === "connected"
               ? "Nothing shared at a level you can see yet."
               : "Connect to see what they've shared with people like you."}
@@ -90,7 +90,7 @@ export default function Profile() {
       ) : (
         <div className="post-list">
           {postHistory.map((post) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post} showDismiss={false} />
           ))}
         </div>
       )}
