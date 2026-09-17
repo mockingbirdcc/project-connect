@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { POST_INTENTS, AUDIENCE_OPTIONS } from "../data/seed";
+import { POST_INTENTS } from "../data/seed";
 import { useApp, useCurrentUser } from "../store/AppContext";
+import { audienceUserIds } from "../lib/consent";
 import Avatar from "./Avatar";
 import MessageModal from "./MessageModal";
 
@@ -16,7 +17,7 @@ function timeAgo(iso) {
 }
 
 export default function PostCard({ post, showDismiss = true }) {
-  const { users, toggleReaction, addComment, dismissPost } = useApp();
+  const { users, connections, toggleReaction, addComment, dismissPost } = useApp();
   const currentUser = useCurrentUser();
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [draft, setDraft] = useState("");
@@ -24,9 +25,15 @@ export default function PostCard({ post, showDismiss = true }) {
 
   const author = users.find((u) => u.id === post.authorId);
   const intent = POST_INTENTS.find((i) => i.id === post.intent);
-  const audience = AUDIENCE_OPTIONS.find((a) => a.id === post.audience);
 
   if (!author) return null;
+
+  const visibleUsers = audienceUserIds(
+    { authorId: post.authorId, audience: post.audience, customAudienceIds: post.customAudienceIds, hiddenFromIds: post.hiddenFromIds },
+    connections
+  )
+    .map((id) => users.find((u) => u.id === id))
+    .filter(Boolean);
 
   const iReacted = post.reactions.some((r) => r.userId === currentUser.id);
   const hasAnyReplyOption = post.allowReact || post.allowComment || post.allowMessage;
@@ -67,9 +74,17 @@ export default function PostCard({ post, showDismiss = true }) {
       <p className="post-content">{post.content}</p>
 
       <div className="post-footer">
-        <span className="audience-note">
-          👁 Visible to: {audience ? audience.label : "Specific people"}
-        </span>
+        <div className="audience-pictograph">
+          <span className="audience-label">Visible to</span>
+          <span className="audience-avatars">
+            {visibleUsers.length === 0 ? (
+              <span className="avatar-empty-note">Just you, for now</span>
+            ) : (
+              visibleUsers.slice(0, 6).map((u) => <Avatar key={u.id} user={u} size={22} />)
+            )}
+            {visibleUsers.length > 6 && <span className="avatar-overflow">+{visibleUsers.length - 6}</span>}
+          </span>
+        </div>
       </div>
 
       {hasAnyReplyOption ? (

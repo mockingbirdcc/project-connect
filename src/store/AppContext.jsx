@@ -15,6 +15,7 @@ function normalizePost(post) {
     comments: [],
     dismissedBy: [],
     customAudienceIds: [],
+    hiddenFromIds: [],
     ...post,
   };
 }
@@ -89,7 +90,7 @@ export function AppProvider({ children }) {
     }));
   }, []);
 
-  const createPost = useCallback(({ authorId, content, intent, audience, customAudienceIds, allowReact, allowComment, allowMessage }) => {
+  const createPost = useCallback(({ authorId, content, intent, audience, customAudienceIds, hiddenFromIds, allowReact, allowComment, allowMessage }) => {
     setState((s) => ({
       ...s,
       posts: [
@@ -100,6 +101,7 @@ export function AppProvider({ children }) {
           intent,
           audience,
           customAudienceIds: customAudienceIds || [],
+          hiddenFromIds: hiddenFromIds || [],
           createdAt: new Date().toISOString(),
           allowReact,
           allowComment,

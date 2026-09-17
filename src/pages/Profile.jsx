@@ -24,7 +24,13 @@ export default function Profile() {
       .filter((p) => p.authorId === profileUser.id)
       .filter((p) =>
         canView(
-          { viewerId: currentUser.id, authorId: p.authorId, audience: p.audience, customAudienceIds: p.customAudienceIds },
+          {
+            viewerId: currentUser.id,
+            authorId: p.authorId,
+            audience: p.audience,
+            customAudienceIds: p.customAudienceIds,
+            hiddenFromIds: p.hiddenFromIds,
+          },
           connections
         )
       )

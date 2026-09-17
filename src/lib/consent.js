@@ -5,17 +5,34 @@ export function tierRank(tier) {
 }
 
 // Can `viewerId` see a post authored by `authorId` with the given audience settings?
-export function canView({ viewerId, authorId, audience, customAudienceIds }, connections) {
+export function canView({ viewerId, authorId, audience, customAudienceIds, hiddenFromIds }, connections) {
   if (viewerId === authorId) return true;
 
+  if (hiddenFromIds && hiddenFromIds.includes(viewerId)) return false;
+
   if (audience === "custom") {
-    return customAudienceIds.includes(viewerId);
+    return (customAudienceIds || []).includes(viewerId);
   }
 
   const edge = findAcceptedConnection(authorId, viewerId, connections);
   if (!edge) return false;
 
   return tierRank(edge.tier) >= tierRank(audience);
+}
+
+// Ids of userId's accepted connections at or above the given tier.
+export function connectedUserIdsAtTier(userId, connections, tier) {
+  const minRank = tierRank(tier);
+  return connections
+    .filter((c) => c.status === "accepted" && (c.fromId === userId || c.toId === userId) && tierRank(c.tier) >= minRank)
+    .map((c) => (c.fromId === userId ? c.toId : c.fromId));
+}
+
+// Ids of everyone who actually ends up able to see a post with this audience/hidden config.
+export function audienceUserIds({ authorId, audience, customAudienceIds, hiddenFromIds }, connections) {
+  const base = audience === "custom" ? customAudienceIds || [] : connectedUserIdsAtTier(authorId, connections, audience);
+  const hidden = new Set(hiddenFromIds || []);
+  return base.filter((id) => !hidden.has(id));
 }
 
 export function findAcceptedConnection(userA, userB, connections) {

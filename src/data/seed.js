@@ -159,6 +159,7 @@ export const seedPosts = [
       { id: "cm1", authorId: "u3", content: "SO proud of you for this.", createdAt: "2026-09-15T17:10:00Z" },
     ],
     dismissedBy: [],
+    hiddenFromIds: [],
   },
   {
     id: "p2",
@@ -174,6 +175,7 @@ export const seedPosts = [
     reactions: [],
     comments: [],
     dismissedBy: [],
+    hiddenFromIds: [],
   },
   {
     id: "p3",
@@ -189,6 +191,7 @@ export const seedPosts = [
     reactions: [],
     comments: [],
     dismissedBy: [],
+    hiddenFromIds: [],
   },
   {
     id: "p4",
@@ -206,6 +209,7 @@ export const seedPosts = [
       { id: "cm2", authorId: "u1", content: "I did it in June, zero regrets — happy to talk through it.", createdAt: "2026-09-12T10:02:00Z" },
     ],
     dismissedBy: [],
+    hiddenFromIds: [],
   },
   {
     id: "p5",
@@ -221,6 +225,7 @@ export const seedPosts = [
     reactions: [{ userId: "u2", emoji: "👍" }, { userId: "u4", emoji: "👍" }],
     comments: [],
     dismissedBy: [],
+    hiddenFromIds: [],
   },
 ];
 

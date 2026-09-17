@@ -15,7 +15,13 @@ export default function Feed() {
     return posts
       .filter((post) =>
         canView(
-          { viewerId: currentUser.id, authorId: post.authorId, audience: post.audience, customAudienceIds: post.customAudienceIds },
+          {
+            viewerId: currentUser.id,
+            authorId: post.authorId,
+            audience: post.audience,
+            customAudienceIds: post.customAudienceIds,
+            hiddenFromIds: post.hiddenFromIds,
+          },
           connections
         )
       )
